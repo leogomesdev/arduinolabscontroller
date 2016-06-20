@@ -33,7 +33,7 @@
                        lalalal
                     </div>
                 @endif
-                    <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%">
+                    <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
                         <thead class="cabecalhodetabelageral">
                             <tr>
                                 <th class='text-center'>Número</th>
@@ -43,7 +43,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($laboratorios as $laboratorio)
+                            @foreach ($laboratorios as $laboratorio)
                                 <tr>
                                     <td>{{ $laboratorio->number }}</td>
                                     <td>{{ $laboratorio->linux_user }}</td>
@@ -57,11 +57,7 @@
                                         </a>
                                     </td>
                                 </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="9">Nenhum registro cadastrado.</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                     </tbody>
                 </table>
                 </div>
