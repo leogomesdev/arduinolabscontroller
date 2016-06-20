@@ -19,11 +19,11 @@ class LabsController extends Controller
 
     public function getIndex(){
     	$laboratorios = Lab::orderBy('number', 'asc')->get();
-      	return view::make('laboratorios.index', compact ('laboratorios'));
+      	return view::make('labs.index', compact ('laboratorios'));
     }
 
     public function getCadastrar(){
-    	return view('laboratorios.new-edit');
+    	return view('labs.new-edit');
     }
 
     public function postCadastrar(Request $request){
@@ -40,7 +40,7 @@ class LabsController extends Controller
 
     public function getEditar($id){
         $laboratorio = Lab::find($id);
-        return view('laboratorios.new-edit', compact('laboratorio'));
+        return view('labs.new-edit', compact('laboratorio'));
     }
 
     public function postEditar(Request $request, $id){

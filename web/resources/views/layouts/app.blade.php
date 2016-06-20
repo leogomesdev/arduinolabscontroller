@@ -40,15 +40,17 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Arduino Labs Controller
                 </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Início</a></li>
-                    <li><a href="{{ url('/laboratorios') }}">Laboratórios</a></li>
+                    @if (!Auth::guest())
+                        <li><a href="{{ url('/home') }}">Início</a></li>
+                        <li><a href="{{ url('/laboratorios') }}">Laboratórios</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->

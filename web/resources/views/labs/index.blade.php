@@ -13,7 +13,6 @@
                 </div>
                 
                 <div class="panel-body">
-                aqui
                 @if (count($errors)>0)
                     <div class="alert alert-danger">
                               @foreach($errors->all() as $mensagem)
