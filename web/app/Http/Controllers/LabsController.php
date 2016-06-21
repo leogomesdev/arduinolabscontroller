@@ -18,47 +18,47 @@ class LabsController extends Controller
     }
 
     public function getIndex(){
-    	$laboratorios = Lab::orderBy('number', 'asc')->get();
-      	return view::make('labs.index', compact ('laboratorios'));
+    	$labs = Lab::orderBy('number', 'asc')->get();
+      	return view::make('labs.index', compact ('labs'));
     }
 
-    public function getCadastrar(){
+    public function getNew(){
     	return view('labs.new-edit');
     }
 
-    public function postCadastrar(Request $request){
+    public function postNew(Request $request){
     	/*$validacao = Validator::make($request->all(),$this->regras,$this->mensagens);
 	    if ($validacao->fails())
 	    {
 			return Redirect::back()->withErrors($validacao)->withInput($request->all());
 	    }*/
         $input = $request->all();
-        $laboratorio = New Lab($input);
-        $laboratorio->save();
-        return Redirect('/laboratorios')->with('sucesso', 'Cadastro efetuado com sucesso!');
+        $lab = New Lab($input);
+        $lab->save();
+        return Redirect('/labs')->with('sucesso', 'Cadastro efetuado com sucesso!');
     }
 
-    public function getEditar($id){
-        $laboratorio = Lab::find($id);
-        return view('labs.new-edit', compact('laboratorio'));
+    public function getEdit($id){
+        $lab = Lab::find($id);
+        return view('labs.new-edit', compact('lab'));
     }
 
-    public function postEditar(Request $request, $id){
+    public function postEdit(Request $request, $id){
         $input = $request->all();
-        $laboratorio = Lab::find($id);
-        $laboratorio->update($input);
+        $lab = Lab::find($id);
+        $lab->update($input);
         $mensagem = 'Alteração efetuada com sucesso!';
-        return Redirect('/laboratorios')->with('mensagem');
+        return Redirect('/labs')->with('mensagem');
     }
 
-    public function getApagar($id){
-        $laboratorio = Lab::find($id);
-        $laboratorio->delete();
-        return Redirect('/laboratorios')->with('sucesso', 'Registro excluído com sucesso!');
+    public function getDelete($id){
+        $lab = Lab::find($id);
+        $lab->delete();
+        return Redirect('/labs')->with('sucesso', 'Registro excluído com sucesso!');
     }
 
 
-     public function getDesligar()
+     public function getShutdown()
      {
 
       header('Content-Disposition: attachment; filename="script.vbs"');
@@ -66,13 +66,13 @@ class LabsController extends Controller
       header("Content-transfer-encoding: binary\n");
 
       echo "Dim lab\n";
-      echo "lab = InputBox(\"Insira o numero do laboratorio a ser desligado\")\n";
+      echo "lab = InputBox(\"Insira o numero do lab a ser desligado\")\n";
 
       exit;
      }
 
 
-     public function getLigar()
+     public function getPower()
      {
         // Define porta onde arduino está conectado
         $port = "COM4";          

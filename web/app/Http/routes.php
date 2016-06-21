@@ -24,6 +24,7 @@ Route::group
     function ()
     {
         Route::controller('home', 'HomeController');
-        Route::controller('laboratorios', 'LabsController');
+        Route::controller('labs', 'LabsController');
+        Route::controller('computers', 'ComputersController');
     }
 );
