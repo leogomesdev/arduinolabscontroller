@@ -28,7 +28,7 @@
                         <div class="form-group">
                             {!! Form::label('linux_user', 'Usuário Linux', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-linux" aria-hidden="true"></i></span>
                                 {!! Form::text('linux_user', isset($lab->linux_user) ? $lab->linux_user : '', array ('placeholder' => 'insira aqui o usuário Linux', 'class' => 'form-control')) !!}
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             {!! Form::label('windows_user', 'Usuário Windows', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-windows" aria-hidden="true"></i></span>
                                 {!! Form::text('windows_user', isset($lab->windows_user) ? $lab->windows_user : '', array ('placeholder' => 'insira aqui o usuário Windows', 'class' => 'form-control')) !!}
                             </div>
                         </div>

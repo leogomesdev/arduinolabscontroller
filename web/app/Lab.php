@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Computer;
+use App\Rele;
 
 class Lab extends Model
 {
@@ -19,4 +20,8 @@ class Lab extends Model
 		return $this->hasMany(Computer::class);
     }
 
+    public function reles()
+	{
+		return $this->hasMany(Rele::class);
+    }
 }

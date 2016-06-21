@@ -26,5 +26,6 @@ Route::group
         Route::controller('home', 'HomeController');
         Route::controller('labs', 'LabsController');
         Route::controller('computers', 'ComputersController');
+        Route::controller('reles', 'RelesController');
     }
 );
