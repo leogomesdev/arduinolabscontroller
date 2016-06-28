@@ -60,6 +60,7 @@
                     @if (!Auth::guest())
                         <li><a href="{{ url('/home') }}">Início</a></li>
                         <li><a href="{{ url('/computers') }}">Computadores</a></li>
+                        <li><a href="{{ url('/configurations') }}">Configurações</a></li>
                         <li><a href="{{ url('/labs') }}">Laboratórios</a></li>
                         <li><a href="{{ url('/reles') }}">Relés</a></li>
                     @endif
