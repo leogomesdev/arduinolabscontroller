@@ -57,52 +57,16 @@ class LabsController extends Controller
         return Redirect('/labs')->with('sucesso', 'Registro excluído com sucesso!');
     }
 
+    public function getPower($id){
+        $lab = Lab::find($id);
+        $lab->power();
+        return Redirect::back()->with('sucess', 'Comando enviado com sucesso!');
+    }
 
-     public function getShutdown()
-     {
-
-      header('Content-Disposition: attachment; filename="script.vbs"');
-      header("Cache-control: private");
-      header("Content-transfer-encoding: binary\n");
-
-      echo "Dim lab\n";
-      echo "lab = InputBox(\"Insira o numero do lab a ser desligado\")\n";
-
-      exit;
-     }
-
-
-     public function getPower()
-     {
-        // Define porta onde arduino está conectado
-        $port = "COM4";          
-        // Configura velocidade de comunicação com a porta serial
-        exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
-        // PC 5
-        sleep(2);
-        // Inicia comunicação serial
-        $fp = fopen($port, 'c+');
-        // PC 5
-        sleep(2);
-        echo("Me conectei ao Arduino via Serial e estou enviando um endereco MAC. <br />");
-        //$MACinteiro = "00-29-125-252-26-52";
-        $MACinteiro = "00:1D:7D:FC:1A:34";
-        $duplasdemac = explode(":", $MACinteiro);
-        foreach ($duplasdemac as $parte){
-            $parte = hexdec($parte);
-            fwrite($fp, $parte);
-            sleep(2);
-            echo($parte);
-            echo("-");
-        }
-        sleep(2);
-        fwrite($fp, "1_off");
-        sleep(2);
-        fwrite($fp, "2_off");
-        sleep(2);
-        fwrite($fp, "3_off");
-        sleep(2);
-        fwrite($fp, "4_off");
-        sleep(2);
-     }
+    public function getShutdown($id){
+        $lab = Lab::find($id);
+        $lab->shutdown();
+        return Redirect::back()->with('sucess', 'Baixe e execute o Script para desligar os computadores!');
+    }
+        
 }

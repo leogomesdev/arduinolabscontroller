@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Lab;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
      */
     public function getIndex()
     {
-        return view('home');
+        $labs = Lab::get();
+        return view('home', compact('labs'));
     }
 }
