@@ -39,7 +39,7 @@ class Lab extends Model
 
 	     foreach($this->reles()->get() as $rele)
          {
-         	fwrite($fp, $rele->pin."_on");
+         	fwrite($fp, $rele->pin."_off");
          	sleep($delay);
          }
 

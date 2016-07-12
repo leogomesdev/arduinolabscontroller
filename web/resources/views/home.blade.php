@@ -11,7 +11,9 @@
                    @foreach($labs as $lab)
                    
                    <div class="form-group">
-                   <label>Laboratório {{$lab->number}}</label>
+                   <div class='col-sm-2'>                   
+                        <label>Laboratório {{$lab->number}}</label>
+                   </div>
                     <a href="/labs/power/{{$lab->id}}" class="btn btn-success">
                         <i class="fa fa-bolt" aria-hidden="true"></i> Ligar
                     </a>

@@ -36,6 +36,7 @@
                     <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
                         <thead class="cabecalhodetabelageral">
                             <tr>
+                                <th class='text-center'>Nome</th>
                                 <th class='text-center'>Pino</th>
                                 <th class='text-center'>Laboratório</th>
                                 <th class='text-center'>Ações</th>
@@ -44,6 +45,7 @@
                         <tbody>
                             @foreach ($reles as $rele)
                                 <tr>
+                                    <td>{{ $rele->name }}</td>
                                     <td>{{ $rele->pin }}</td>
                                     <td>{{ $rele->lab ? $rele->lab->number : '' }}</td>
                                     <td>

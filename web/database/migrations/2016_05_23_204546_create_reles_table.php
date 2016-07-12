@@ -14,6 +14,7 @@ class CreateRelesTable extends Migration
     {
         Schema::create('reles', function (Blueprint $table) {
             $table->increments('id');
+            $table->String('name');
             $table->integer('pin')->unsigned();
             $table->integer('lab_id')->unsigned();
             $table->foreign('lab_id')

@@ -14,6 +14,7 @@ class CreateComputersTable extends Migration
     {
         Schema::create('computers', function (Blueprint $table) {
             $table->increments('id');
+            $table->String('name');
             $table->string('ip');
             $table->string('mac');
             $table->integer('lab_id')->unsigned();

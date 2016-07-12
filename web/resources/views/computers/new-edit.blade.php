@@ -16,8 +16,7 @@
                         @else
                             Cadastro
                             {!! Form::open(array('url' => "/computers/new", 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
-                                        @endif 
-                        <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                        @endif
                         <div class="form-group">
                             {!! Form::label('name', 'Nome', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
