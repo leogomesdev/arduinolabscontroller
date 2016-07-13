@@ -14,10 +14,10 @@
                    <div class='col-sm-2'>                   
                         <label>Laboratório {{$lab->number}}</label>
                    </div>
-                    <a href="/labs/power/{{$lab->id}}" class="btn btn-success">
+                    <a href="{{URL::to('/labs/power/'.$lab->id)}}" class="btn btn-success">
                         <i class="fa fa-bolt" aria-hidden="true"></i> Ligar
                     </a>
-                    <a href="/labs/shutdown/{{$lab->id}}" class="btn btn-danger">
+                    <a href="{{URL::to('/labs/shutdown/'.$lab->id)}}" class="btn btn-danger">
                         <i class="fa fa-power-off" aria-hidden="true"></i> Desligar
                     </a>
                 </div>

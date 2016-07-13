@@ -10,26 +10,7 @@
                 </div>
                 
                 <div class="panel-body">
-                @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                              @foreach($errors->all() as $mensagem)
-                                    {!! $mensagem !!}
-                              @endforeach
-                    </div>
-                @endif
-                @if(isset($mensagem))
-                entrei no if
-                    <div class="alert alert-success">
-                        {!! $mensagem !!}
-                    </div>
-                @endif
-
-                @if(Session('mensagem'))
-                entrei no if 2
-                    <div class="alert alert-success">
-                       lalalal
-                    </div>
-                @endif
+                    @include('messages')
                     <form class="form-horizontal">
                         <div class="form-group">
                             {!! Form::label('plink_path', 'Instalação do Plink', array('class' => 'col-sm-4 control-label')) !!}
@@ -60,7 +41,7 @@
                 <div class="box-footer">
                 <!-- DIV para o botao editar -->
                 <div class="form-group text-center">
-                    <a href="/configurations/edit/{{$configuration->id}}" class="btn btn-default">
+                    <a href="{{URL::to('/configurations/edit/'.$configuration->id)}}" class="btn btn-default">
                         <i class="glyphicon glyphicon-pencil"></i> Editar
                     </a>
                 </div>

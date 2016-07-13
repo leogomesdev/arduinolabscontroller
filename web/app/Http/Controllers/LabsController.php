@@ -47,8 +47,7 @@ class LabsController extends Controller
         $input = $request->all();
         $lab = Lab::find($id);
         $lab->update($input);
-        $mensagem = 'Alteração efetuada com sucesso!';
-        return Redirect('/labs')->with('mensagem');
+        return Redirect('/labs')->with('sucesso','Alteração efetuada com sucesso!');
     }
 
     public function getDelete($id){
@@ -60,13 +59,13 @@ class LabsController extends Controller
     public function getPower($id){
         $lab = Lab::find($id);
         $lab->power();
-        return Redirect::back()->with('sucess', 'Comando enviado com sucesso!');
+        return Redirect::back()->with('sucesso', 'Comando de ligar enviado com sucesso!');
     }
 
     public function getShutdown($id){
         $lab = Lab::find($id);
         $lab->shutdown();
-        return Redirect::back()->with('sucess', 'Baixe e execute o Script para desligar os computadores!');
+        return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Baixe e execute o Script para desligar os computadores!');
     }
         
 }

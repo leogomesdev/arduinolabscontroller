@@ -1,0 +1,9 @@
+div.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+label.required:before {
+  content:"* ";
+  color:red;
+}

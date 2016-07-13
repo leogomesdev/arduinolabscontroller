@@ -21,6 +21,7 @@ class ConfigurationsController extends Controller
     	$configuration = Configuration::get()->first();
         if(!isset($configuration))
         {
+            //Create if not exists
             $configuration = new Configuration(
                                                 ['plink_path' => 'C:\Program files (x86)\puTTY\plink.exe',
                                                 'psshutdown_path' => 'C:\Program files (86)\PSTools\psshutdown.exe',
@@ -42,7 +43,6 @@ class ConfigurationsController extends Controller
         $input = $request->all();
         $configuration = Configuration::find($id);
         $configuration->update($input);
-        $mensagem = 'Alteração efetuada com sucesso!';
-        return Redirect('/configurations')->with('mensagem');
+        return Redirect('/configurations')->with('sucesso','Alteração efetuada com sucesso!');
     }
 }

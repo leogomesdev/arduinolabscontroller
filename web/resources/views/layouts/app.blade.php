@@ -14,11 +14,13 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     
-    <link rel="stylesheet" href="/assets/css/dataTables.bootstrap.css">
-    <script src="/assets/js/jQuery-2.2.0.min.js"></script>
-    <script src="/assets/js/jquery.dataTables.min.js"></script>
-    <script src="/assets/js/dataTables.bootstrap.min.js"></script>
-    <script src="/assets/js/dataTables.buttons.min.js"></script>
+    <link rel="stylesheet" href="{{URL::to('assets/css/dataTables.bootstrap.css')}}">
+    <link rel="stylesheet" href="{{URL::to('assets/css/style.css')}}">
+    <script src="{{URL::to('assets/js/jQuery-2.2.0.min.js')}}"></script>
+    <script src="{{URL::to('assets/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{URL::to('assets/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{URL::to('assets/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{URL::to('assets/js/jquery.mask.js')}}"></script>
 
 
     

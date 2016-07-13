@@ -13,26 +13,7 @@
                 </div>
                 
                 <div class="panel-body">
-                @if (count($errors)>0)
-                    <div class="alert alert-danger">
-                              @foreach($errors->all() as $mensagem)
-                                    {!! $mensagem !!}
-                              @endforeach
-                    </div>
-                @endif
-                @if(isset($mensagem))
-                entrei no if
-                    <div class="alert alert-success">
-                        {!! $mensagem !!}
-                    </div>
-                @endif
-
-                @if(Session('mensagem'))
-                entrei no if 2
-                    <div class="alert alert-success">
-                       lalalal
-                    </div>
-                @endif
+                    @include('messages')
                     <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
                         <thead class="cabecalhodetabelageral">
                             <tr>

@@ -24,7 +24,7 @@ class RelesController extends Controller
     }
 
     public function getNew(){
-        $labs = Lab::get();
+        $labs = Lab::orderBy('number','asc')->get();
     	return view('reles.new-edit',compact('labs'));
     }
 
@@ -42,8 +42,7 @@ class RelesController extends Controller
 
     public function getEdit($id){
         $rele = Rele::find($id);
-        //dd($computer->lab->id);
-        $labs = Lab::get();
+        $labs = Lab::orderBy('number','asc')->get();
         return view('reles.new-edit', compact('rele','labs'));
     }
 
@@ -51,8 +50,7 @@ class RelesController extends Controller
         $input = $request->all();
         $rele = Rele::find($id);
         $rele->update($input);
-        $mensagem = 'Alteração efetuada com sucesso!';
-        return Redirect('/reles')->with('mensagem');
+        return Redirect('/reles')->with('sucesso','Alteração efetuada com sucesso!');
     }
 
     public function getDelete($id){

@@ -7,6 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Relé</div>
                 <div class="panel-body">
+                    @include('messages')
                     <a href="{{url('/reles')}}" title="Voltar" class="text-left btn btn-box-tool botao-voltar">
                         <i class="glyphicon glyphicon-arrow-left"></i>
                     </a>
@@ -17,22 +18,22 @@
                             Cadastro
                             {!! Form::open(array('url' => "/reles/new", 'class' => 'form-horizontal', 'enctype'=>'multipart/form-data')) !!}
                          @endif 
-                        <div class="form-group">
+                        <div class="form-group required">
                             {!! Form::label('name', 'Nome', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-pawn"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-font" aria-hidden="true"></i></span>
                                 {!! Form::text('name', isset($rele->name) ? $rele->name : '', array ('placeholder' => 'Insira aqui nome do Relé', 'class' => 'form-control')) !!}
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group required">
                             {!! Form::label('pin', 'Pino', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-pawn"></i></span>
-                                {!! Form::text('pin', isset($rele->pin) ? $rele->pin : '', array ('placeholder' => 'Insira aqui número do pino', 'class' => 'form-control')) !!}
+                                {!! Form::text('pin', isset($rele->pin) ? $rele->pin : '', array ('placeholder' => '00', 'class' => 'form-control','id'=>'pin')) !!}
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group required">
                                     {!! Form::label('lab_id', 'Laboratório', array('class' => 'col-sm-3 control-label')) !!}
                                     <div class='col-sm-5 input-group'>
                                         <span class="input-group-addon"><i class="fa fa-users"></i></span>
@@ -40,7 +41,7 @@
                                                             <option value=null>Selecione</option>
                                                             @foreach ($labs as $lab)
                                                                         <option value="{{$lab->id}}"
-                                                                            @if(null !== (Request::old('lab_id')) && ($$lab->id==Request::old('lab_id')))
+                                                                            @if(null !== (Request::old('lab_id')) && ($lab->id==Request::old('lab_id')))
                                                                                 selected
                                                                             @else
                                                                                 @if(isset($rele->lab->id))
@@ -54,19 +55,24 @@
                                                 </select>
                                     </div>
                         </div>
-
+                        <label class="required">Indica campo obrigatório</label>
+                    </div>
+                    <div class="box-footer">
+                        <!-- DIV para o botao enviar -->
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-default">
+                                <i class="glyphicon glyphicon-floppy-open"></i> Salvar
+                            </button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
             </div>
-            <div class="box-footer">
-                <!-- DIV para o botao enviar -->
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-default">
-                        <i class="glyphicon glyphicon-floppy-open"></i> Salvar
-                    </button>
-                </div>
-            </div>
-            {!! Form::close() !!}
+        </div>
     </div>
 </div>
-</div>
-</div>
+<script type="text/javascript">
+    $(document).ready (function(){
+        $('#pin').mask('00');
+    });
+</script>
 @endsection
