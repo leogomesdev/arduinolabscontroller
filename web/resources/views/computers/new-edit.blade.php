@@ -80,7 +80,6 @@
 </div>
 <script type="text/javascript">
     $(document).ready (function(){
-        $('#ip').mask('000.000.000.000');
         $('#mac').mask('AA:AA:AA:AA:AA:AA');
     });
 </script>

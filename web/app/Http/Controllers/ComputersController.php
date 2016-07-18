@@ -36,7 +36,7 @@ class ComputersController extends Controller
                             'lab_id.not_in' => 'Selecione o laboratório',
                             'name.unique' => 'Esse nome já está em uso',
                             'ip.unique' => 'Esse endereço IP já está em uso',
-                            'mac.unique' => 'Esse endereço MAC já está em uso',
+                            'mac.unique' => 'Esse endereço MAC já está em uso'
                           ];
 
 

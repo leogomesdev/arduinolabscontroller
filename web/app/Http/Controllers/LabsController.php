@@ -9,6 +9,7 @@ use Redirect;
 use App\Lab;
 use View;
 use Session;
+use Validator;
 
 class LabsController extends Controller
 {
@@ -16,6 +17,25 @@ class LabsController extends Controller
     {
         $this->middleware('auth');
     }
+
+    private function rules($id = null){
+        return  [
+                    "number" => "required|unique:labs,number,$id",
+                    "linux_user" => "required",
+                    "linux_password" => "required",
+                    "windows_user" => "required",
+                    "windows_password" => "required"
+                ];
+    }
+
+    private $messages = [
+                            'number.required' => 'Insira o nome',
+                            'number.unique' => 'Esse número já está em uso',
+                            'linux_user.required' => 'Insira o nome de usuário Linux',
+                            'linux_password.required' => 'Insira a senha do usuário Linux',
+                            'windows_user.required' => 'Insira o nome de usuário Windows',
+                            'windows_password.required' => 'Insira a senha do usuário Windows'
+                          ];
 
     public function getIndex(){
     	$labs = Lab::orderBy('number', 'asc')->get();
@@ -27,11 +47,11 @@ class LabsController extends Controller
     }
 
     public function postNew(Request $request){
-    	/*$validacao = Validator::make($request->all(),$this->regras,$this->mensagens);
-	    if ($validacao->fails())
-	    {
-			return Redirect::back()->withErrors($validacao)->withInput($request->all());
-	    }*/
+    	$validator = Validator::make($request->all(),$this->rules(),$this->messages);
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput($request->all());
+        }
         $input = $request->all();
         $lab = New Lab($input);
         $lab->save();
@@ -44,6 +64,11 @@ class LabsController extends Controller
     }
 
     public function postEdit(Request $request, $id){
+        $validator = Validator::make($request->all(),$this->rules($id),$this->messages);
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput($request->all());
+        }
         $input = $request->all();
         $lab = Lab::find($id);
         $lab->update($input);

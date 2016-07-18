@@ -8,6 +8,7 @@
                 <div class="panel-heading">Painel de Controle</div>
 
                 <div class="panel-body">
+                  @include('messages')
                    @foreach($labs as $lab)
                    
                    <div class="form-group">

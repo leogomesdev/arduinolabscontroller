@@ -29,28 +29,28 @@
                             {!! Form::label('linux_user', 'Usuário Linux', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="fa fa-linux" aria-hidden="true"></i></span>
-                                {!! Form::text('linux_user', isset($lab->linux_user) ? $lab->linux_user : '', array ('placeholder' => 'insira aqui o usuário Linux', 'class' => 'form-control')) !!}
+                                {!! Form::text('linux_user', isset($lab->linux_user) ? $lab->linux_user : '', array ('placeholder' => 'Insira aqui o usuário Linux', 'class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group required">
                             {!! Form::label('linux_password', 'Senha do Usuário Linux', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-console"></i></span>
-                                {!! Form::text('linux_password', isset($lab->linux_password) ? $lab->linux_password : '', array ('placeholder' => 'insira aqui a senha do usuário Linux', 'class' => 'form-control')) !!}
+                                {!! Form::text('linux_password', isset($lab->linux_password) ? $lab->linux_password : '', array ('placeholder' => 'Insira aqui a senha do usuário Linux', 'class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group required">
                             {!! Form::label('windows_user', 'Usuário Windows', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="fa fa-windows" aria-hidden="true"></i></span>
-                                {!! Form::text('windows_user', isset($lab->windows_user) ? $lab->windows_user : '', array ('placeholder' => 'insira aqui o usuário Windows', 'class' => 'form-control')) !!}
+                                {!! Form::text('windows_user', isset($lab->windows_user) ? $lab->windows_user : '', array ('placeholder' => 'Insira aqui o usuário Windows', 'class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group required">
                             {!! Form::label('windows_password', 'Senha do Usuário Windows', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-console"></i></span>
-                                {!! Form::text('windows_password', isset($lab->windows_password) ? $lab->windows_password : '', array ('placeholder' => 'insira aqui a senha do Usuário Windows', 'class' => 'form-control')) !!}
+                                {!! Form::text('windows_password', isset($lab->windows_password) ? $lab->windows_password : '', array ('placeholder' => 'Insira aqui a senha do Usuário Windows', 'class' => 'form-control')) !!}
                             </div>
                         </div>
                         <label class="required">Indica campo obrigatório</label>

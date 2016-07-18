@@ -10,6 +10,7 @@ use App\Rele;
 use App\Lab;
 use View;
 use Session;
+use Validator;
 
 class RelesController extends Controller
 {
@@ -17,6 +18,22 @@ class RelesController extends Controller
     {
         $this->middleware('auth');
     }
+
+    private function rules($id = null){
+        return  [
+                    "name" => "required|unique:reles,name,$id",
+                    "pin" => "required|unique:reles,pin,$id",
+                    "lab_id" => "required|not_in:null"
+                ];
+    }
+
+    private $messages = [
+                            'name.required' => 'Insira o nome',
+                            'pin.required' => 'Insira o pino',
+                            'lab_id.not_in' => 'Selecione o laboratório',
+                            'name.unique' => 'Esse nome já está em uso',
+                            'pin.unique' => 'Esse pino já está em uso'
+                          ];
 
     public function getIndex(){
     	$reles = Rele::orderBy('pin', 'asc')->get();
@@ -29,11 +46,11 @@ class RelesController extends Controller
     }
 
     public function postNew(Request $request){
-    	/*$validacao = Validator::make($request->all(),$this->regras,$this->mensagens);
-	    if ($validacao->fails())
-	    {
-			return Redirect::back()->withErrors($validacao)->withInput($request->all());
-	    }*/
+    	$validator = Validator::make($request->all(),$this->rules(),$this->messages);
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput($request->all());
+        }
         $input = $request->all();
         $rele = New Rele($input);
         $rele->save();
@@ -47,6 +64,11 @@ class RelesController extends Controller
     }
 
     public function postEdit(Request $request, $id){
+        $validator = Validator::make($request->all(),$this->rules($id),$this->messages);
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput($request->all());
+        }
         $input = $request->all();
         $rele = Rele::find($id);
         $rele->update($input);

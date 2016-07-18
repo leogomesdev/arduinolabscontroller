@@ -28,23 +28,26 @@ class Lab extends Model
     public function shutdown()
     {
     	$configuration = Configuration::get()->first();
-    	// Define porta onde arduino está conectado
+    	// Define a porta onde arduino está conectado
         $port = $configuration->arduino_port;
         $delay =  $configuration->communication_delay;     
         // Configura velocidade de comunicação com a porta serial
         exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
         sleep($delay);
-        // Inicia comunicação serial
+        // Inicia comunicação Serial
         $fp = fopen($port, 'c+');
 
+        // Envia comandos para desligar cada Relé do laboratório
 	     foreach($this->reles()->get() as $rele)
          {
          	fwrite($fp, $rele->pin."_off");
          	sleep($delay);
          }
 
-         fclose($fp);
+        // Fecha a comunicação Serial
+        fclose($fp);
 
+        // Cria Script para desligar os computadores
     	header('Content-Disposition: attachment; filename="script.vbs"');
 		header("Cache-control: private");
 		header("Content-transfer-encoding: binary\n");
@@ -57,8 +60,6 @@ class Lab extends Model
 			echo "Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
 			echo "objShellUbuntu".$computer->id.".Run (\"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\")\n";
 		}
-		
-		exit;
     }
 
     public function power()
@@ -78,7 +79,7 @@ class Lab extends Model
 	        sleep($delay);
 	        $MACinteiro = $computer->mac;
 	        $duplasdemac = explode(":", $MACinteiro);
-
+            // Envia cada parte do endereço MAC via Serial como um valor decimal
 	        foreach ($duplasdemac as $parte){
 	            $parte = hexdec($parte);
 	            fwrite($fp, $parte);
@@ -86,12 +87,14 @@ class Lab extends Model
 	        }
 
 	     }
+
+        // Envia comandos para ligar cada Rele do Laboratório
 	    foreach($this->reles()->get() as $rele)
         {
         	fwrite($fp, $rele->pin."_on");
         	sleep($delay);
         }
-
+        // Fecha a conexão Serial
         fclose($fp);
      }
 
