@@ -60,6 +60,8 @@ class Lab extends Model
 			echo "Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
 			echo "objShellUbuntu".$computer->id.".Run (\"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\")\n";
 		}
+
+        exit();
     }
 
     public function power()

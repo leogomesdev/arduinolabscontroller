@@ -7,3 +7,11 @@ label.required:before {
   content:"* ";
   color:red;
 }
+
+body {
+            font-family: 'Lato';
+        }
+
+        .fa-btn {
+            margin-right: 6px;
+        }

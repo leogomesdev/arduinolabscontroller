@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::auth();
 
 Route::group
@@ -28,5 +24,6 @@ Route::group
         Route::controller('computers', 'ComputersController');
         Route::controller('reles', 'RelesController');
         Route::controller('configurations', 'ConfigurationsController');
+        Route::controller('/', 'HomeController');
     }
 );
