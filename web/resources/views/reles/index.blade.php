@@ -14,33 +14,35 @@
                 
                 <div class="panel-body">
                     @include('messages')
-                    <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
-                        <thead class="cabecalhodetabelageral">
-                            <tr>
-                                <th class='text-center'>Nome</th>
-                                <th class='text-center'>Pino</th>
-                                <th class='text-center'>Laboratório</th>
-                                <th class='text-center'>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($reles as $rele)
-                                <tr>
-                                    <td>{{ $rele->name }}</td>
-                                    <td>{{ $rele->pin }}</td>
-                                    <td>{{ $rele->lab ? $rele->lab->number : '' }}</td>
-                                    <td>
-                                        <a href='{{url("/reles/edit/{$rele->id}")}}' title="Editar">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
-                                        <a href='{{url("/reles/delete/{$rele->id}")}}' title="Excluir" onclick="return confirm('Deletar esse registro?')">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                    </tbody>
-                </table>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
+                                <thead class="cabecalhodetabelageral">
+                                    <tr>
+                                        <th class='text-center'>Nome</th>
+                                        <th class='text-center'>Pino</th>
+                                        <th class='text-center'>Laboratório</th>
+                                        <th class='text-center'>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($reles as $rele)
+                                        <tr>
+                                            <td>{{ $rele->name }}</td>
+                                            <td>{{ $rele->pin }}</td>
+                                            <td>{{ $rele->lab ? $rele->lab->number : '' }}</td>
+                                            <td>
+                                                <a href='{{url("/reles/edit/{$rele->id}")}}' title="Editar">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                                <a href='{{url("/reles/delete/{$rele->id}")}}' title="Excluir" onclick="return confirm('Deletar esse registro?')">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

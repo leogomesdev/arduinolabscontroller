@@ -11,38 +11,40 @@
                 
                 <div class="panel-body">
                     @include('messages')
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            {!! Form::label('plink_path', 'Instalação do Plink', array('class' => 'col-sm-4 control-label')) !!}
-                            <div class='col-sm-8'>
-                                        <p class="form-control-static">{{$configuration->plink_path}}</p>
+                    <div class="box-body table-responsive no-padding">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                {!! Form::label('plink_path', 'Instalação do Plink', array('class' => 'col-sm-4 control-label')) !!}
+                                <div class='col-sm-8'>
+                                            <p class="form-control-static">{{$configuration->plink_path}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('psshutdown_path', 'Instalação do PsShutdown', array('class' => 'col-sm-4 control-label')) !!}
-                            <div class='col-sm-8'>
-                                        <p class="form-control-static">{{$configuration->psshutdown_path}}</p>
+                            <div class="form-group">
+                                {!! Form::label('psshutdown_path', 'Instalação do PsShutdown', array('class' => 'col-sm-4 control-label')) !!}
+                                <div class='col-sm-8'>
+                                            <p class="form-control-static">{{$configuration->psshutdown_path}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('absolute_public_path', 'Caminho completo da pasta "public"', array('class' => 'col-sm-4 control-label')) !!}
-                            <div class='col-sm-8'>
-                                        <p class="form-control-static">{{$configuration->absolute_public_path}}</p>
+                            <div class="form-group">
+                                {!! Form::label('absolute_public_path', 'Caminho completo da pasta "public"', array('class' => 'col-sm-4 control-label')) !!}
+                                <div class='col-sm-8'>
+                                            <p class="form-control-static">{{$configuration->absolute_public_path}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('arduino_port', 'Porta de Conexão do Arduino', array('class' => 'col-sm-4 control-label')) !!}
-                            <div class='col-sm-8'>
-                                        <p class="form-control-static">{{$configuration->arduino_port}}</p>
+                            <div class="form-group">
+                                {!! Form::label('arduino_port', 'Porta de Conexão do Arduino', array('class' => 'col-sm-4 control-label')) !!}
+                                <div class='col-sm-8'>
+                                            <p class="form-control-static">{{$configuration->arduino_port}}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            {!! Form::label('communication_delay', 'Tempo de espera', array('class' => 'col-sm-4 control-label')) !!}
-                            <div class='col-sm-8'>
-                                        <p class="form-control-static">{{$configuration->communication_delay}}</p>
+                            <div class="form-group">
+                                {!! Form::label('communication_delay', 'Tempo de espera', array('class' => 'col-sm-4 control-label')) !!}
+                                <div class='col-sm-8'>
+                                            <p class="form-control-static">{{$configuration->communication_delay}}</p>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
                 <div class="box-footer">
                 <!-- DIV para o botao editar -->

@@ -14,39 +14,41 @@
                 
                 <div class="panel-body">
                     @include('messages')
-                    <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
-                        <thead class="cabecalhodetabelageral">
-                            <tr>
-                                <th class='text-center'>Número</th>
-                                <th class='text-center'>Usuário Linux</th>
-                                <th class='text-center'>Usuário Windows</th>
-                                <th class='text-center'>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($labs as $lab)
-                                <tr>
-                                    <td>{{ $lab->number }}</td>
-                                    <td>{{ $lab->linux_user }}</td>
-                                    <td>{{ $lab->windows_user }}</td>
-                                    <td>
-                                        <a href='{{url("/labs/edit/{$lab->id}")}}' title="Editar">
-                                            <span class="glyphicon glyphicon-pencil"></span>
-                                        </a>
-                                        <a href='{{url("/labs/delete/{$lab->id}")}}' title="Excluir" onclick="return confirm('Deletar esse registro?')">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                        <a href='{{url("/labs/power/{$lab->id}")}}' title="Ligar">
-                                            <i class="fa fa-bolt" aria-hidden="true"></i>
-                                        </a>
-                                        <a href='{{url("/labs/shutdown/{$lab->id}")}}' title="Desligar">
-                                            <i class="fa fa-power-off" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                    </tbody>
-                </table>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table text-center table-hover table-bordered" cellspacing="0" width="100%" id="example">
+                                <thead class="cabecalhodetabelageral">
+                                    <tr>
+                                        <th class='text-center'>Número</th>
+                                        <th class='text-center'>Usuário Linux</th>
+                                        <th class='text-center'>Usuário Windows</th>
+                                        <th class='text-center'>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($labs as $lab)
+                                        <tr>
+                                            <td>{{ $lab->number }}</td>
+                                            <td>{{ $lab->linux_user }}</td>
+                                            <td>{{ $lab->windows_user }}</td>
+                                            <td>
+                                                <a href='{{url("/labs/edit/{$lab->id}")}}' title="Editar">
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                                <a href='{{url("/labs/delete/{$lab->id}")}}' title="Excluir" onclick="return confirm('Deletar esse registro?')">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </a>
+                                                <a href='{{url("/labs/power/{$lab->id}")}}' title="Ligar">
+                                                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                                                </a>
+                                                <a href='{{url("/labs/shutdown/{$lab->id}")}}' title="Desligar">
+                                                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
