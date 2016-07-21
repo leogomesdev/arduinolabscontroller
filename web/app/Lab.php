@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Computer;
 use App\Configuration;
 use App\Rele;
+use Storage;
+use File;
+use Carbon\Carbon;
 
 class Lab extends Model
 {
@@ -25,79 +28,104 @@ class Lab extends Model
 		return $this->hasMany(Rele::class);
     }
 
+    public function power()
+    {
+        $configuration = Configuration::get()->first();
+        // Definir a porta onde o Arduino está conectado
+        $port = $configuration->arduino_port;
+        $delay =  $configuration->communication_delay;     
+        // Configurar a velocidade de comunicação com a porta serial
+        exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
+        sleep($delay);
+        // Iniciar a comunicação serial
+        $fp = fopen($port, 'c+');
+
+        foreach($this->computers()->get() as $computer)
+        {
+            sleep($delay);
+            $MACinteiro = $computer->mac;
+            $duplasdemac = explode(":", $MACinteiro);
+            // Enviar cada parte do endereço MAC via Serial como um valor decimal
+            foreach ($duplasdemac as $parte){
+                $parte = hexdec($parte);
+                fwrite($fp, $parte);
+                sleep($delay);
+            }
+
+         }
+
+        // Enviar comandos para ligar cada Rele do Laboratório
+        foreach($this->reles()->get() as $rele)
+        {
+            fwrite($fp, $rele->pin."_on");
+            sleep($delay);
+        }
+        // Fechar a conexão Serial
+        fclose($fp);
+     }
+
     public function shutdown()
     {
     	$configuration = Configuration::get()->first();
-    	// Define a porta onde arduino está conectado
+    	// Definir a porta onde Arduino está conectado
         $port = $configuration->arduino_port;
         $delay =  $configuration->communication_delay;     
-        // Configura velocidade de comunicação com a porta serial
+        // Configurar a velocidade de comunicação com a Porta Serial
         exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
         sleep($delay);
-        // Inicia comunicação Serial
+        // Iniciar a comunicação Serial
         $fp = fopen($port, 'c+');
 
-        // Envia comandos para desligar cada Relé do laboratório
+        // Enviar comandos para desligar cada Relé do Laboratório
 	     foreach($this->reles()->get() as $rele)
          {
          	fwrite($fp, $rele->pin."_off");
          	sleep($delay);
          }
 
-        // Fecha a comunicação Serial
+        // Fechar a comunicação Serial
         fclose($fp);
 
-        // Cria Script para desligar os computadores
-    	header('Content-Disposition: attachment; filename="script.vbs"');
-		header("Cache-control: private");
-		header("Content-transfer-encoding: binary\n");
+        // Criar Script para desligar os computadores
+        $text = "";
 		foreach($this->computers()->get() as $computer)
 		{
-			echo "Dim objShellUbuntu".$computer->id."\n";
-			echo "Dim objShellWindows".$computer->id."\n";
-			echo "Set objShellWindows".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
-			echo "objShellWindows".$computer->id.".Run(\"\"\"".$configuration->psshutdown_path."\"\" -u ".$this->windows_user." -p ".$this->windows_password." \\\\".$computer->ip."\"\"\")\n";
-			echo "Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
-			echo "objShellUbuntu".$computer->id.".Run (\"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\")\n";
+			$text = $text."Dim objShellUbuntu".$computer->id."\n";
+			$text = $text."Dim objShellWindows".$computer->id."\n";
+			$text = $text."Set objShellWindows".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
+			$text = $text."objShellWindows".$computer->id.".Run \"\"\"".$configuration->psshutdown_path."\"\" -u ".$this->windows_user." -p ".$this->windows_password." \\\\".$computer->ip."\"\"\" , 2 \n";
+			$text = $text."Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
+			$text = $text."objShellUbuntu".$computer->id.".Run \"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\" , 2 \n";
 		}
 
-        exit();
+        // Criar nome do arquivo e salvar este no caminho especificado
+        $file_name = Carbon::now()->parse()->format('d-m-Y-H-i');
+        $path = 'scripts/'.$file_name.'.vbs';
+        File::put($path,$text);
+
+        // Executar o script criado
+        exec("\WINDOWS\system32\cmd.exe /c START C:\wamp\www\arduinolabscontroller\web\public\scripts\\".$file_name.".vbs");
+
+        // Apagar arquivos de scrits antigos (criados há mais de um dia)
+        $this->remove_old_files();
     }
 
-    public function power()
+    private function remove_old_files()
     {
-    	$configuration = Configuration::get()->first();
-    	// Define porta onde arduino está conectado
-        $port = $configuration->arduino_port;
-        $delay =  $configuration->communication_delay;     
-        // Configura velocidade de comunicação com a porta serial
-        exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
-        sleep($delay);
-        // Inicia comunicação serial
-        $fp = fopen($port, 'c+');
-
-        foreach($this->computers()->get() as $computer)
+        // Localizar todos os arquivos existentes na pasta
+        $files = Storage::disk('public')->allFiles('scripts');
+        // Entrar em loop e verificar os arquivos modificados ontem:
+        foreach ($files as $file)
         {
-	        sleep($delay);
-	        $MACinteiro = $computer->mac;
-	        $duplasdemac = explode(":", $MACinteiro);
-            // Envia cada parte do endereço MAC via Serial como um valor decimal
-	        foreach ($duplasdemac as $parte){
-	            $parte = hexdec($parte);
-	            fwrite($fp, $parte);
-	            sleep($delay);
-	        }
+            // Localizar a data de criação do arquivo
+            $time = Carbon::createFromTimestampUTC(Storage::disk('public')->lastModified($file));
+            // Apagar o arquivo, se ele foi criado há mais de um dia
+            if($time <= (Carbon::now()->addDays(-1)))
+            {
+                Storage::disk('public')->delete($file);
+            }
 
-	     }
-
-        // Envia comandos para ligar cada Rele do Laboratório
-	    foreach($this->reles()->get() as $rele)
-        {
-        	fwrite($fp, $rele->pin."_on");
-        	sleep($delay);
         }
-        // Fecha a conexão Serial
-        fclose($fp);
-     }
+    }
 
 }

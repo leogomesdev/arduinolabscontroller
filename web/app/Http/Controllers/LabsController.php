@@ -90,7 +90,7 @@ class LabsController extends Controller
     public function getShutdown($id){
         $lab = Lab::find($id);
         $lab->shutdown();
-        return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Baixe e execute o Script para desligar os computadores!');
+        return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Aguarde a execução automática do Script para desligar os computadores!');
     }
         
 }
