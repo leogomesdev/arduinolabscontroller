@@ -21,31 +21,27 @@ class ConfigurationsController extends Controller
     private $rules = [
                    "plink_path" => "required",
                     "psshutdown_path" => "required",
+                    "absolute_public_path" => "required",
                     "arduino_port" => "required",
                     "communication_delay" => "required"
             ];
     
 
     private $messages = [
-                            'plink_path.required' => 'Insira o caminho de instalação do PLink',
-                            'psshutdown_path.required' => 'Insira o caminho de instalação do PsShutdown',
-                            'arduino_port.required' => 'Insira a porta de conexão com o Arduino',
-                            'communication_delay.required' => 'Insira o tempo de pausa entre as comunicações com o Arduino'
-                          ];
+                        'plink_path.required' => 'Insira o caminho de instalação do PLink',
+                        'psshutdown_path.required' => 'Insira o caminho de instalação do PsShutdown',
+                        'absolute_public_path.required' => 'Insira o caminho absoluto da pasta public do projeto',
+                        'arduino_port.required' => 'Insira a porta de conexão com o Arduino',
+                        'communication_delay.required' => 'Insira o tempo de pausa entre as comunicações com o Arduino'
+                        ];
 
 
     public function getIndex(){
     	$configuration = Configuration::get()->first();
         if(!isset($configuration))
         {
-            //Cria configurações padrão
-            $configuration = new Configuration(
-                                                ['plink_path' => 'C:\Program files (x86)\puTTY\plink.exe',
-                                                'psshutdown_path' => 'C:\Program files (86)\PSTools\psshutdown.exe',
-                                                'arduino_port' => 'COM4',
-                                                'communication_delay' => '2',
-                                                ]
-                                              );
+            // Criar configurações padrão, caso não estejam definidas
+            $configuration = new Configuration(Configuration::getDefault());
             $configuration->save();
         }
       	return view::make('configurations.index', compact ('configuration'));

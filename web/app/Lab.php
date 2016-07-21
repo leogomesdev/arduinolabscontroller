@@ -69,7 +69,8 @@ class Lab extends Model
     	$configuration = Configuration::get()->first();
     	// Definir a porta onde Arduino está conectado
         $port = $configuration->arduino_port;
-        $delay =  $configuration->communication_delay;     
+        $delay =  $configuration->communication_delay;
+        $public_path = $configuration->absolute_public_path;  
         // Configurar a velocidade de comunicação com a Porta Serial
         exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
         sleep($delay);
@@ -104,7 +105,7 @@ class Lab extends Model
         File::put($path,$text);
 
         // Executar o script criado
-        exec("\WINDOWS\system32\cmd.exe /c START C:\wamp\www\arduinolabscontroller\web\public\scripts\\".$file_name.".vbs");
+        exec("\WINDOWS\system32\cmd.exe /c START ".$public_path."\scripts\\".$file_name.".vbs");
 
         // Apagar arquivos de scrits antigos (criados há mais de um dia)
         $this->remove_old_files();
@@ -119,8 +120,8 @@ class Lab extends Model
         {
             // Localizar a data de criação do arquivo
             $time = Carbon::createFromTimestampUTC(Storage::disk('public')->lastModified($file));
-            // Apagar o arquivo, se ele foi criado há mais de um dia
-            if($time <= (Carbon::now()->addDays(-1)))
+            // Apagar o arquivo, se ele foi criado há mais de uma hora
+            if($time <= (Carbon::now()->addHours(-1)))
             {
                 Storage::disk('public')->delete($file);
             }

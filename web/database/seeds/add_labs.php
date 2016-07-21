@@ -9,6 +9,8 @@ class add_labs extends Seeder
      *
      * @return void
      */
+
+    // to run: php artisan db:seed --class add_labs
     public function run()
     {
         DB::table('labs')->insert(array(

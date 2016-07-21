@@ -16,6 +16,7 @@ class CreateConfigurationTable extends Migration
             $table->increments('id');
             $table->string('plink_path');
             $table->string('psshutdown_path');
+            $table->string('absolute_public_path');
             $table->string('arduino_port');
             $table->integer('communication_delay');      
             $table->timestamps();

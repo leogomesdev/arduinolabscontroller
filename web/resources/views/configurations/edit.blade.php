@@ -29,6 +29,13 @@
                             </div>
                         </div>
                         <div class="form-group required">
+                            {!! Form::label('absolute_public_path', 'Caminho da pasta "public"', array('class' => 'col-sm-3 control-label')) !!}
+                            <div class='col-sm-5 input-group'>
+                                <span class="input-group-addon"><i class="fa fa-windows"></i></span>
+                                {!! Form::text('absolute_public_path', isset($configuration->absolute_public_path) ? $configuration->absolute_public_path : '', array ('placeholder' => 'Insira aqui o caminho de acesso à pasta public do projeto', 'class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        <div class="form-group required">
                             {!! Form::label('arduino_port', 'Porta de Conexão do Arduino', array('class' => 'col-sm-3 control-label')) !!}
                             <div class='col-sm-5 input-group'>
                                 <span class="input-group-addon"><i class="fa fa-sliders"></i></span>

@@ -25,6 +25,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            {!! Form::label('absolute_public_path', 'Caminho completo da pasta "public"', array('class' => 'col-sm-4 control-label')) !!}
+                            <div class='col-sm-8'>
+                                        <p class="form-control-static">{{$configuration->absolute_public_path}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             {!! Form::label('arduino_port', 'Porta de Conexão do Arduino', array('class' => 'col-sm-4 control-label')) !!}
                             <div class='col-sm-8'>
                                         <p class="form-control-static">{{$configuration->arduino_port}}</p>

@@ -9,6 +9,8 @@ class add_computers extends Seeder
      *
      * @return void
      */
+
+    // to run: php artisan db:seed --class add_computers
     public function run()
     {
         DB::table('computers')->insert(array(
