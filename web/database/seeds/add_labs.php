@@ -25,6 +25,7 @@ class add_labs extends Seeder
             array('number' => '9','linux_user'=>'aluno','linux_password'=>'*iff1234','windows_user'=>'aluno','windows_password'=>'*iff1234'),
             array('number' => '10','linux_user'=>'aluno','linux_password'=>'*iff1234','windows_user'=>'aluno','windows_password'=>'*iff1234'),
             array('number' => '11','linux_user'=>'aluno','linux_password'=>'*iff1234','windows_user'=>'aluno','windows_password'=>'*iff1234'),
+            array('number' => '12','linux_user'=>'aluno','linux_password'=>'*iff1234','windows_user'=>'ADM','windows_password'=>'Delta1Ks@83'),
         ));
     }
 }

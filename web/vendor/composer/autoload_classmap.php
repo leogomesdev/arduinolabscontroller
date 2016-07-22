@@ -520,4 +520,5 @@ return array(
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'add_computers' => $baseDir . '/database/seeds/add_computers.php',
     'add_labs' => $baseDir . '/database/seeds/add_labs.php',
+    'add_reles' => $baseDir . '/database/seeds/add_reles.php',
 );
