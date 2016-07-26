@@ -83,14 +83,30 @@ class LabsController extends Controller
 
     public function getPower($id){
         $lab = Lab::find($id);
-        $lab->power();
-        return Redirect::back()->with('sucesso', 'Comando de ligar enviado com sucesso!');
+        $result = $lab->power();
+        if ($result==true)
+        {
+            return Redirect::back()->with('sucesso', 'Comando de ligar enviado com sucesso!');
+        }
+        else
+        {
+            return Redirect::back()->withErrors(['erro'=>'Não foi possível conectar-se ao Arduino!']);
+        }
+        
     }
 
     public function getShutdown($id){
         $lab = Lab::find($id);
-        $lab->shutdown();
-        return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Aguarde a execução automática do Script para desligar os computadores!');
+        $result = $lab->shutdown();
+        if ($result==true)
+        {
+            return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Aguarde a execução automática do Script para desligar os computadores!');
+        }
+        else
+        {
+            return Redirect::back()->withErrors(['erro'=>'Não foi possível conectar-se ao Arduino!']);
+        }
+        
     }
         
 }

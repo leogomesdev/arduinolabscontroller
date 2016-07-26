@@ -34,35 +34,45 @@ class Lab extends Model
         // Definir a porta onde o Arduino está conectado
         $port = $configuration->arduino_port;
         // Configurar a pausa entre as comunicações com a porta serial
-        $delay =  $configuration->communication_delay;     
-        // Preparar a porta para Conexão Serial      
-        exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
-        sleep($delay);
-        // Iniciar a comunicação serial
-        $fp = fopen($port, 'c+');
+        $delay =  $configuration->communication_delay;
 
-        // Enviar comandos para ligar cada Rele do Laboratório
-        foreach($this->reles()->get() as $rele)
-        {
-            fwrite($fp, $rele->pin."_on");
+        try
+        {     
+            // Preparar a porta para Conexão Serial      
+            exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
             sleep($delay);
-        }
-        
-        foreach($this->computers()->get() as $computer)
-        {
-            $MACinteiro = $computer->mac;
-            $duplasdemac = explode(":", $MACinteiro);
-            // Enviar cada parte do endereço MAC via Serial como um valor decimal
-            foreach ($duplasdemac as $parte){
-                $parte = hexdec($parte);
-                fwrite($fp, $parte);
+            // Iniciar a comunicação serial
+            $fp = fopen($port, 'c+');
+
+            // Enviar comandos para ligar cada Rele do Laboratório
+            foreach($this->reles()->get() as $rele)
+            {
+                fwrite($fp, $rele->pin."_on");
                 sleep($delay);
             }
+            
+            foreach($this->computers()->get() as $computer)
+            {
+                $MACinteiro = $computer->mac;
+                $duplasdemac = explode(":", $MACinteiro);
+                // Enviar cada parte do endereço MAC via Serial como um valor decimal
+                foreach ($duplasdemac as $parte){
+                    $parte = hexdec($parte);
+                    fwrite($fp, $parte);
+                    sleep($delay);
+                }
 
-         }
+             }
 
-         // Fechar a conexão Serial
-        fclose($fp);
+             // Fechar a conexão Serial
+            fclose($fp);
+
+            return true;
+        }
+        catch (\Exception $e)
+        {
+            return false;
+        }
      }
 
     public function shutdown()
@@ -73,45 +83,54 @@ class Lab extends Model
         // Definir a porta onde o Arduino está conectado
         $port = $configuration->arduino_port;
         // Configurar a pausa entre as comunicações com a porta serial
-        $delay =  $configuration->communication_delay;     
-        // Preparar a porta para Conexão Serial      
-        exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
-        sleep($delay);
-        // Iniciar a comunicação Serial
-        $fp = fopen($port, 'c+');
+        $delay =  $configuration->communication_delay;
+        try
+        {     
+            // Preparar a porta para Conexão Serial      
+            exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
+            sleep($delay);
+            // Iniciar a comunicação Serial
+            $fp = fopen($port, 'c+');
 
-        // Enviar comandos para desligar cada Relé do Laboratório
-	     foreach($this->reles()->get() as $rele)
-         {
-         	fwrite($fp, $rele->pin."_off");
-         	sleep($delay);
-         }
+            // Enviar comandos para desligar cada Relé do Laboratório
+    	     foreach($this->reles()->get() as $rele)
+             {
+             	fwrite($fp, $rele->pin."_off");
+             	sleep($delay);
+             }
 
-        // Fechar a comunicação Serial
-        fclose($fp);
+            // Fechar a comunicação Serial
+            fclose($fp);
 
-        // Criar Script para desligar os computadores
-        $text = "";
-		foreach($this->computers()->get() as $computer)
-		{
-			$text = $text."Dim objShellUbuntu".$computer->id."\n";
-			$text = $text."Dim objShellWindows".$computer->id."\n";
-			$text = $text."Set objShellWindows".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
-			$text = $text."objShellWindows".$computer->id.".Run \"\"\"".$configuration->psshutdown_path."\"\" -u ".$this->windows_user." -p ".$this->windows_password." \\\\".$computer->ip."\"\"\" , 2 \n";
-			$text = $text."Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
-			$text = $text."objShellUbuntu".$computer->id.".Run \"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\" , 2 \n";
-		}
+            // Criar Script para desligar os computadores
+            $text = "";
+    		foreach($this->computers()->get() as $computer)
+    		{
+    			$text = $text."Dim objShellUbuntu".$computer->id."\n";
+    			$text = $text."Dim objShellWindows".$computer->id."\n";
+    			$text = $text."Set objShellWindows".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
+    			$text = $text."objShellWindows".$computer->id.".Run \"\"\"".$configuration->psshutdown_path."\"\" -u ".$this->windows_user." -p ".$this->windows_password." \\\\".$computer->ip."\"\"\" , 2 \n";
+    			$text = $text."Set objShellUbuntu".$computer->id." = WScript.CreateObject(\"WScript.Shell\")\n";
+    			$text = $text."objShellUbuntu".$computer->id.".Run \"\"\"".$configuration->plink_path."\"\" -ssh ".$this->linux_user."@".$computer->ip." -pw ".$this->linux_password." sudo poweroff\"\"\" , 2 \n";
+    		}
 
-        // Criar nome do arquivo e salvar este no caminho especificado
-        $file_name = Carbon::now()->parse()->format('d-m-Y-H-i');
-        $path = 'scripts/'.$file_name.'.vbs';
-        File::put($path,$text);
+            // Criar nome do arquivo e salvar este no caminho especificado
+            $file_name = Carbon::now()->parse()->format('d-m-Y-H-i');
+            $path = 'scripts/'.$file_name.'.vbs';
+            File::put($path,$text);
 
-        // Executar o script criado
-        exec("\WINDOWS\system32\cmd.exe /c START ".$public_path."\scripts\\".$file_name.".vbs");
+            // Executar o script criado
+            exec("\WINDOWS\system32\cmd.exe /c START ".$public_path."\scripts\\".$file_name.".vbs");
 
-        // Apagar arquivos de scrits antigos (criados há mais de um dia)
-        $this->remove_old_files();
+            // Apagar arquivos de scrits antigos (criados há mais de uma hora)
+            $this->remove_old_files();
+
+            return true;
+        }
+        catch (\Exception $e)
+        {
+            return false;
+        }
     }
 
     private function remove_old_files()
