@@ -37,12 +37,6 @@
                                                 <a href='{{url("/labs/delete/{$lab->id}")}}' title="Excluir" onclick="return confirm('Deletar esse registro?')">
                                                     <span class="glyphicon glyphicon-trash"></span>
                                                 </a>
-                                                <a href='{{url("/labs/power/{$lab->id}")}}' title="Ligar">
-                                                    <i class="fa fa-bolt" aria-hidden="true"></i>
-                                                </a>
-                                                <a href='{{url("/labs/shutdown/{$lab->id}")}}' title="Desligar">
-                                                    <i class="fa fa-power-off" aria-hidden="true"></i>
-                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
