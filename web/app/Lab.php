@@ -33,8 +33,9 @@ class Lab extends Model
         $configuration = Configuration::get()->first();
         // Definir a porta onde o Arduino está conectado
         $port = $configuration->arduino_port;
+        // Configurar a pausa entre as comunicações com a porta serial
         $delay =  $configuration->communication_delay;     
-        // Configurar a velocidade de comunicação com a porta serial
+        // Preparar a porta para Conexão Serial      
         exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
         sleep($delay);
         // Iniciar a comunicação serial
@@ -67,11 +68,13 @@ class Lab extends Model
     public function shutdown()
     {
     	$configuration = Configuration::get()->first();
-    	// Definir a porta onde Arduino está conectado
+        // Definir caminho para armazenar Scripts de desligamento
+        $public_path = $configuration->absolute_public_path; 
+        // Definir a porta onde o Arduino está conectado
         $port = $configuration->arduino_port;
-        $delay =  $configuration->communication_delay;
-        $public_path = $configuration->absolute_public_path;  
-        // Configurar a velocidade de comunicação com a Porta Serial
+        // Configurar a pausa entre as comunicações com a porta serial
+        $delay =  $configuration->communication_delay;     
+        // Preparar a porta para Conexão Serial      
         exec("MODE $port BAUD=9600 PARITY=n DATA=8 XON=on STOP=1");
         sleep($delay);
         // Iniciar a comunicação Serial
