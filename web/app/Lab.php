@@ -40,9 +40,15 @@ class Lab extends Model
         // Iniciar a comunicação serial
         $fp = fopen($port, 'c+');
 
+        // Enviar comandos para ligar cada Rele do Laboratório
+        foreach($this->reles()->get() as $rele)
+        {
+            fwrite($fp, $rele->pin."_on");
+            sleep($delay);
+        }
+        
         foreach($this->computers()->get() as $computer)
         {
-            sleep($delay);
             $MACinteiro = $computer->mac;
             $duplasdemac = explode(":", $MACinteiro);
             // Enviar cada parte do endereço MAC via Serial como um valor decimal
@@ -54,13 +60,7 @@ class Lab extends Model
 
          }
 
-        // Enviar comandos para ligar cada Rele do Laboratório
-        foreach($this->reles()->get() as $rele)
-        {
-            fwrite($fp, $rele->pin."_on");
-            sleep($delay);
-        }
-        // Fechar a conexão Serial
+         // Fechar a conexão Serial
         fclose($fp);
      }
 
