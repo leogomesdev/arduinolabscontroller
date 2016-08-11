@@ -16,7 +16,7 @@ class add_reles extends Seeder
         DB::table('reles')->insert(array(
             array('name' => 'Rele 1','pin'=>'2', 'lab_id'=> '12'),
             array('name' => 'Rele 2','pin'=>'3', 'lab_id'=> '12'),
-            array('name' => 'Rele 3','pin'=>'3', 'lab_id'=> '12'),
+            array('name' => 'Rele 3','pin'=>'4', 'lab_id'=> '12'),
             array('name' => 'Rele 4','pin'=>'5', 'lab_id'=> '12')
         ));
 

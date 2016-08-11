@@ -25,7 +25,8 @@ class HomeController extends Controller
      */
     public function getIndex()
     {
+        $head = ['home' => 'active'];
         $labs = Lab::orderBy('number')->get();
-        return view('home', compact('labs'));
+        return view('home', compact('labs','head'));
     }
 }

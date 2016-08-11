@@ -19,6 +19,8 @@ class RelesController extends Controller
         $this->middleware('auth');
     }
 
+	private $head = ['reles' => 'active'];
+
     private function rules($id = null){
         return  [
                     "name" => "required|unique:reles,name,$id",
@@ -37,12 +39,14 @@ class RelesController extends Controller
 
     public function getIndex(){
     	$reles = Rele::orderBy('pin', 'asc')->get();
-      	return view::make('reles.index', compact ('reles'));
+		$head = $this->head;
+      	return view::make('reles.index', compact ('reles', 'head'));
     }
 
     public function getNew(){
         $labs = Lab::orderBy('number','asc')->get();
-    	return view('reles.new-edit',compact('labs'));
+		$head = $this->head;
+    	return view('reles.new-edit',compact('labs', 'head'));
     }
 
     public function postNew(Request $request){
@@ -60,7 +64,8 @@ class RelesController extends Controller
     public function getEdit($id){
         $rele = Rele::find($id);
         $labs = Lab::orderBy('number','asc')->get();
-        return view('reles.new-edit', compact('rele','labs'));
+		$head = $this->head;
+        return view('reles.new-edit', compact('rele','labs', 'head'));
     }
 
     public function postEdit(Request $request, $id){

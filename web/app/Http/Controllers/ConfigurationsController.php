@@ -18,6 +18,8 @@ class ConfigurationsController extends Controller
         $this->middleware('auth');
     }
 
+	private $head = ['configurations' => 'active'];
+
     private $rules = [
                    "plink_path" => "required",
                     "psshutdown_path" => "required",
@@ -25,7 +27,7 @@ class ConfigurationsController extends Controller
                     "arduino_port" => "required",
                     "communication_delay" => "required"
             ];
-    
+
 
     private $messages = [
                         'plink_path.required' => 'Insira o caminho de instalação do PLink',
@@ -44,12 +46,14 @@ class ConfigurationsController extends Controller
             $configuration = new Configuration(Configuration::getDefault());
             $configuration->save();
         }
-      	return view::make('configurations.index', compact ('configuration'));
+		$head = $this->head;
+      	return view::make('configurations.index', compact ('configuration', 'head'));
     }
 
     public function getEdit($id){
         $configuration = Configuration::find($id);
-        return view('configurations.edit', compact('configuration'));
+		$head = $this->head;
+        return view('configurations.edit', compact('configuration', 'head'));
     }
 
     public function postEdit(Request $request, $id){

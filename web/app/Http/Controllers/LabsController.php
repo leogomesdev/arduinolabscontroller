@@ -18,6 +18,8 @@ class LabsController extends Controller
         $this->middleware('auth');
     }
 
+	private $head = ['labs' => 'active'];
+
     private function rules($id = null){
         return  [
                     "number" => "required|unique:labs,number,$id",
@@ -39,11 +41,13 @@ class LabsController extends Controller
 
     public function getIndex(){
     	$labs = Lab::orderBy('number', 'asc')->get();
-      	return view::make('labs.index', compact ('labs'));
+		$head = $this->head;
+      	return view::make('labs.index', compact ('labs', 'head'));
     }
 
     public function getNew(){
-    	return view('labs.new-edit');
+		$head = $this->head;
+    	return view('labs.new-edit', compact ('head'));
     }
 
     public function postNew(Request $request){
@@ -60,7 +64,8 @@ class LabsController extends Controller
 
     public function getEdit($id){
         $lab = Lab::find($id);
-        return view('labs.new-edit', compact('lab'));
+		$head = $this->head;
+        return view('labs.new-edit', compact('lab', 'head'));
     }
 
     public function postEdit(Request $request, $id){
@@ -86,13 +91,13 @@ class LabsController extends Controller
         $result = $lab->power();
         if ($result==true)
         {
-            return Redirect::back()->with('sucesso', 'Comando de ligar enviado com sucesso!');
+            return Redirect::back()->with('sucesso', 'Comando de ligar o laboratório '.$lab->number.' enviado com sucesso!');
         }
         else
         {
             return Redirect::back()->withErrors(['erro'=>'Não foi possível conectar-se ao Arduino!']);
         }
-        
+
     }
 
     public function getShutdown($id){
@@ -100,13 +105,13 @@ class LabsController extends Controller
         $result = $lab->shutdown();
         if ($result==true)
         {
-            return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Aguarde a execução automática do Script para desligar os computadores!');
+            return Redirect::back()->with('sucesso', 'Desligamento elétrico concluído. Iniciada a execução automática do Script para desligar os computadores do laboratório '.$lab->number);
         }
         else
         {
             return Redirect::back()->withErrors(['erro'=>'Não foi possível conectar-se ao Arduino!']);
         }
-        
+
     }
-        
+
 }

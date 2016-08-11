@@ -59,11 +59,21 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
-                            <li><a href="{{ url('/home') }}">Início</a></li>
-                            <li><a href="{{ url('/computers') }}">Computadores</a></li>
-                            <li><a href="{{ url('/configurations') }}">Configurações</a></li>
-                            <li><a href="{{ url('/labs') }}">Laboratórios</a></li>
-                            <li><a href="{{ url('/reles') }}">Relés</a></li>
+                            <li class="{{$head['home'] or ''}}">
+                                <a href="{{ url('/home') }}">Início</a>
+                            </li>
+                            <li class="{{$head['computers'] or ''}}">
+                                <a href="{{ url('/computers') }}">Computadores</a>
+                            </li>
+                            <li class="{{$head['configurations'] or ''}}">
+                                <a href="{{ url('/configurations') }}">Configurações</a>
+                            </li>
+                            <li class="{{$head['labs'] or ''}}">
+                                <a href="{{ url('/labs') }}">Laboratórios</a>
+                            </li>
+                            <li class="{{$head['reles'] or ''}}">
+                                <a href="{{ url('/reles') }}">Relés</a>
+                            </li>
                         @endif
                     </ul>
 

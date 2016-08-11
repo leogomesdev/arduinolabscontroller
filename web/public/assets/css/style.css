@@ -26,3 +26,7 @@ body {
 		overflow-x: visible !important;
 	}
 }
+
+li.active{
+    font-weight: bold;
+}

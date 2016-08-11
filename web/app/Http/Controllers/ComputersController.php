@@ -20,6 +20,8 @@ class ComputersController extends Controller
         $this->middleware('auth');
     }
 
+	private $head = ['computers' => 'active'];
+
     private function rules($id = null){
         return  [
                     "name" => "required|unique:computers,name,$id",
@@ -42,12 +44,14 @@ class ComputersController extends Controller
 
     public function getIndex(){
     	$computers = Computer::orderBy('name', 'asc')->get();
-      	return view::make('computers.index', compact ('computers'));
+		$head = $this->head;
+      	return view::make('computers.index', compact ('computers', 'head'));
     }
 
     public function getNew(){
         $labs = Lab::orderBy('number','asc')->get();
-    	return view('computers.new-edit',compact('labs'));
+		$head = $this->head;
+    	return view('computers.new-edit',compact('labs', 'head'));
     }
 
     public function postNew(Request $request){
@@ -65,7 +69,8 @@ class ComputersController extends Controller
     public function getEdit($id){
         $computer = Computer::find($id);
         $labs = Lab::orderBy('number','asc')->get();
-        return view('computers.new-edit', compact('computer','labs'));
+		$head = $this->head;
+        return view('computers.new-edit', compact('computer','labs', 'head'));
     }
 
     public function postEdit(Request $request, $id){
