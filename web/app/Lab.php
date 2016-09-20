@@ -43,6 +43,7 @@ class Lab extends Model
             sleep($delay);
             // Iniciar a comunicação serial
             $fp = fopen($port, 'c+');
+            sleep($delay);
 
             // Enviar comandos para ligar cada Rele do Laboratório
             foreach($this->reles()->get() as $rele)
@@ -91,7 +92,8 @@ class Lab extends Model
             sleep($delay);
             // Iniciar a comunicação Serial
             $fp = fopen($port, 'c+');
-
+            sleep($delay);
+            
             // Enviar comandos para desligar cada Relé do Laboratório
     	     foreach($this->reles()->get() as $rele)
              {

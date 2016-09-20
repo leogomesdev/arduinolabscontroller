@@ -26,6 +26,7 @@ int saida_16 = 16;
 int saida_17 = 17;
 int saida_18 = 18;
 int saida_19 = 19;
+
 //Configurações da rede local.
 byte arduino_MAC[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 byte arduino_IP[] = { 192, 168, 0, 7 };
@@ -39,8 +40,7 @@ int wolPort = 9;
 EthernetUDP Udp;
 EthernetServer server(80);
 
-void setup()
-{
+void setup() {
   //Iniciar a leitura de dados via serial.
   Serial.begin(9600);
   contador = 0;
@@ -48,7 +48,7 @@ void setup()
   server.begin();
   //Declaração dos pinos disponíveis.
   pinMode(saida_2, OUTPUT); 
-  pinMode(saida_3, OUTPUT);
+  pinMode(saida_3, OUTPUT); 
   pinMode(saida_4, OUTPUT); 
   pinMode(saida_5, OUTPUT); 
   pinMode(saida_6, OUTPUT); 
@@ -65,220 +65,215 @@ void setup()
   pinMode(saida_17, OUTPUT);
   pinMode(saida_18, OUTPUT);
   pinMode(saida_19, OUTPUT); 
-  //Iniciar objeto EthernetUDP.
-  Udp.begin(portaLocale);
+
+    //Iniciar objeto EthernetUDP.
+    Udp.begin(portaLocale);
 }
-void loop ()
-{
-  if(Serial.available())
-  {
-    //Receber comandos via serial, verificar qual pino será utilizado e executar a ação programada.
-    while (Serial.available()>0)
-    {
+void loop () {
+  if(Serial.available()) {
+      //Receber comandos via serial, verificar qual pino será utilizado e executar a ação programada.
+     while (Serial.available()>0){
         comandorecebido = Serial.readString();
-        if(comandorecebido == "2_on")
-        {
-            digitalWrite(saida_2, HIGH);
-        }
-        else
-          if(comandorecebido == "2_off")
-          {
-            digitalWrite(saida_2, LOW);
-          }
-          else
-            if(comandorecebido == "3_on")
+        Serial.println(comandorecebido);
+            if(comandorecebido == "2_on")
             {
-                digitalWrite(saida_3, HIGH);
+                digitalWrite(saida_2, LOW);
             }
             else
-              if(comandorecebido == "3_off")
+              if(comandorecebido == "2_off")
               {
-                digitalWrite(saida_3, LOW);
+                digitalWrite(saida_2, HIGH);
               }
               else
-                if(comandorecebido == "4_on")
+                if(comandorecebido == "3_on")
                 {
-                    digitalWrite(saida_4, HIGH);
+                    digitalWrite(saida_3, LOW);
                 }
                 else
-                  if(comandorecebido == "4_off")
+                  if(comandorecebido == "3_off")
                   {
-                    digitalWrite(saida_4, LOW);
+                    digitalWrite(saida_3, HIGH);
+                  }
+                  else
+                    if(comandorecebido == "4_on")
+                    {
+                        digitalWrite(saida_4, LOW);
                     }
                     else
-                      if(comandorecebido == "5_on")
+                      if(comandorecebido == "4_off")
                       {
-                        digitalWrite(saida_5, HIGH);
-                      }
-                      else
-                        if(comandorecebido == "5_off")
-                        {
-                        digitalWrite(saida_5, LOW);
+                        digitalWrite(saida_4, HIGH);
                         }
                         else
-                          if(comandorecebido == "6_on")
+                          if(comandorecebido == "5_on")
                           {
-                            digitalWrite(saida_6, HIGH);
+                            digitalWrite(saida_5, LOW);
                           }
                           else
-                            if(comandorecebido == "6_off")
+                            if(comandorecebido == "5_off")
                             {
-                            digitalWrite(saida_6, LOW);
+                            digitalWrite(saida_5, HIGH);
                             }
                             else
-                              if(comandorecebido == "7_on")
+                              if(comandorecebido == "6_on")
                               {
-                                digitalWrite(saida_7, HIGH);
+                                digitalWrite(saida_6, LOW);
                               }
                               else
-                                if(comandorecebido == "7_off")
+                                if(comandorecebido == "6_off")
                                 {
-                                digitalWrite(saida_7, LOW);
+                                digitalWrite(saida_6, HIGH);
                                 }
                                 else
-                                  if(comandorecebido == "8_on")
+                                  if(comandorecebido == "7_on")
                                   {
-                                    digitalWrite(saida_8, HIGH);
+                                    digitalWrite(saida_7, LOW);
                                   }
                                   else
-                                    if(comandorecebido == "8_off")
+                                    if(comandorecebido == "7_off")
                                     {
-                                    digitalWrite(saida_8, LOW);
+                                    digitalWrite(saida_7, HIGH);
                                     }
                                     else
-                                      if(comandorecebido == "9_on")
+                                      if(comandorecebido == "8_on")
                                       {
-                                        digitalWrite(saida_9, HIGH);
+                                        digitalWrite(saida_8, LOW);
                                       }
                                       else
-                                        if(comandorecebido == "9_off")
+                                        if(comandorecebido == "8_off")
                                         {
-                                        digitalWrite(saida_9, LOW);
+                                        digitalWrite(saida_8, HIGH);
                                         }
                                         else
-                                          if(comandorecebido == "10_on")
+                                          if(comandorecebido == "9_on")
                                           {
-                                            digitalWrite(saida_10, HIGH);
+                                            digitalWrite(saida_9, LOW);
                                           }
                                           else
-                                            if(comandorecebido == "10_off")
+                                            if(comandorecebido == "9_off")
                                             {
-                                            digitalWrite(saida_10, LOW);
+                                            digitalWrite(saida_9, HIGH);
                                             }
                                             else
-                                              if(comandorecebido == "11_on")
+                                              if(comandorecebido == "10_on")
                                               {
-                                                digitalWrite(saida_11, HIGH);
+                                                digitalWrite(saida_10, LOW);
                                               }
                                               else
-                                                if(comandorecebido == "11_off")
+                                                if(comandorecebido == "10_off")
                                                 {
-                                                digitalWrite(saida_11, LOW);
+                                                digitalWrite(saida_10, HIGH);
                                                 }
                                                 else
-                                                  if(comandorecebido == "12_on")
+                                                  if(comandorecebido == "11_on")
                                                   {
-                                                    digitalWrite(saida_12, HIGH);
+                                                    digitalWrite(saida_11, LOW);
                                                   }
                                                   else
-                                                    if(comandorecebido == "12_off")
+                                                    if(comandorecebido == "11_off")
                                                     {
-                                                    digitalWrite(saida_12, LOW);
-                                                    }
-                                                   else
-                                                    if(comandorecebido == "13_on")
-                                                    {
-                                                      digitalWrite(saida_13, HIGH);
+                                                    digitalWrite(saida_11, HIGH);
                                                     }
                                                     else
-                                                      if(comandorecebido == "13_off")
+                                                      if(comandorecebido == "12_on")
                                                       {
-                                                      digitalWrite(saida_13, LOW);
-                                                      }
-                                                        
-                                                     else
-                                                      if(comandorecebido == "14_on")
-                                                      {
-                                                        digitalWrite(saida_14, HIGH);
+                                                        digitalWrite(saida_12, LOW);
                                                       }
                                                       else
-                                                        if(comandorecebido == "14_off")
+                                                        if(comandorecebido == "12_off")
                                                         {
-                                                        digitalWrite(saida_14, LOW);
-                                                        }
-                                                        
-                                                       else
-                                                        if(comandorecebido == "15_on")
-                                                        {
-                                                          digitalWrite(saida_15, HIGH);
+                                                        digitalWrite(saida_12, HIGH);
                                                         }
                                                         else
-                                                          if(comandorecebido == "15_off")
+                                                          if(comandorecebido == "13_on")
                                                           {
-                                                          digitalWrite(saida_15, LOW);
-                                                          }
-                                                            
-                                                         else
-                                                          if(comandorecebido == "16_on")
-                                                          {
-                                                            digitalWrite(saida_16, HIGH);
+                                                            digitalWrite(saida_13, LOW);
                                                           }
                                                           else
-                                                            if(comandorecebido == "16_off")
+                                                            if(comandorecebido == "13_off")
                                                             {
-                                                            digitalWrite(saida_16, LOW);
-                                                            }
-                                                              
-                                                           else
-                                                            if(comandorecebido == "17_on")
-                                                            {
-                                                              digitalWrite(saida_17, HIGH);
+                                                            digitalWrite(saida_13, HIGH);
                                                             }
                                                             else
-                                                              if(comandorecebido == "17_off")
+                                                              if(comandorecebido == "14_on")
                                                               {
-                                                              digitalWrite(saida_17, LOW);
-                                                              }
-                                                              
-                                                             else
-                                                              if(comandorecebido == "18_on")
-                                                              {
-                                                                digitalWrite(saida_18, HIGH);
+                                                                digitalWrite(saida_14, LOW);
                                                               }
                                                               else
-                                                                if(comandorecebido == "18_off")
+                                                                if(comandorecebido == "14_off")
                                                                 {
-                                                                digitalWrite(saida_18, LOW);
-                                                                }
-                                                               else
-                                                                if(comandorecebido == "19_on")
-                                                                {
-                                                                  digitalWrite(saida_19, HIGH);
+                                                                digitalWrite(saida_14, HIGH);
                                                                 }
                                                                 else
-                                                                  if(comandorecebido == "19_off")
+                                                                  if(comandorecebido == "15_on")
                                                                   {
-                                                                  digitalWrite(saida_19, LOW);
+                                                                    digitalWrite(saida_15, LOW);
                                                                   }
                                                                   else
-                                                                  {  
-                                                                    //Armazenar o valor original em uma String.     
-                                                                    valorOriginalString = comandorecebido;
-                                                                    //Converter o valor originalmente em String para inteiro.
-                                                                    valorConvertidoInteiro = valorOriginalString.toInt();
-                                                                    //Armazenar as partes do MAC em cada posição do vetor.
-                                                                    remote_MAC_ADD[contador] = valorConvertidoInteiro;
-                                                                    contador++;
-                                                                  }
+                                                                    if(comandorecebido == "15_off")
+                                                                    {
+                                                                    digitalWrite(saida_15, HIGH);
+                                                                    }
+                                                                    else
+                                                                      if(comandorecebido == "16_on")
+                                                                      {
+                                                                        digitalWrite(saida_16, LOW);
+                                                                      }
+                                                                      else
+                                                                        if(comandorecebido == "16_off")
+                                                                        {
+                                                                        digitalWrite(saida_16, HIGH);
+                                                                        }
+                                                                        else
+                                                                          if(comandorecebido == "17_on")
+                                                                          {
+                                                                            digitalWrite(saida_17, LOW);
+                                                                          }
+                                                                          else
+                                                                            if(comandorecebido == "17_off")
+                                                                            {
+                                                                            digitalWrite(saida_17, HIGH);
+                                                                            }
+                                                                            else
+                                                                              if(comandorecebido == "18_on")
+                                                                              {
+                                                                                digitalWrite(saida_18, LOW);
+                                                                              }
+                                                                              else
+                                                                                if(comandorecebido == "18_off")
+                                                                                {
+                                                                                digitalWrite(saida_18, HIGH);
+                                                                                }
+                                                                                else
+                                                                                  if(comandorecebido == "19_on")
+                                                                                  {
+                                                                                    digitalWrite(saida_19, LOW);
+                                                                                  }
+                                                                                  else
+                                                                                    if(comandorecebido == "19_off")
+                                                                                    {
+                                                                                    digitalWrite(saida_19, HIGH);
+                                                                                    }
+                                                                                    else    
+                                                                                    {        
+                                                                                      valorOriginalString = comandorecebido;
+                                                                                      //Armazenar o valor original em uma String.     
+                                                                                      valorOriginalString = comandorecebido;
+                                                                                      //Converter o valor originalmente em String para inteiro.
+                                                                                      valorConvertidoInteiro = valorOriginalString.toInt();
+                                                                                      //Armazenar as partes do MAC em cada posição do vetor.
+                                                                                      remote_MAC_ADD[contador] = valorConvertidoInteiro;
+                                                                                      contador++;
+                                                                                    }
     }          
     //Após armazenar as seis partes do endereço MAC, enviar o pacote WOL e zerar o contador.
-    if(contador==6)
-    {
+    if(contador==6){
       sendMagicPacket();
       contador = 0;
     }
   }
 }
+
 //Função para criar e enviar o pacote WOL.
 void sendMagicPacket()
 {
@@ -290,6 +285,7 @@ void sendMagicPacket()
     magicPacket[IndiceArray] = 0xFF;
     IndiceArray++;
   }
+  
   //Adicionar ao pacote WOL o endereço MAC de destino 16 vezes.
   for( Ciclo = 0; Ciclo < 16; Ciclo++ )
   {
